@@ -39,7 +39,7 @@ var main = function(){
         } else{
 			var response = JSON.parse(stdout);
             console.log('Successful:', response);
-			console.log('You may now login to the portal through: ' + argv.u + '/?oauth_token=' + response.oauth_token + '&auth_username=USERNAME');
+			console.log('You may now login to the portal through: ' + argv.u + '/?oauth_token=' + response.oauth_token + '&auth_username=USERNAME&app=APP');
         }
     });
 };
