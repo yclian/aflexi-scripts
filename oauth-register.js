@@ -19,7 +19,7 @@ var main = function(){
             .default('u', 'http://portal.aflexi.net/mini_operator.php')
             .default('t', 'standard')
             .usage('Usage: oauth-register.js -l username -p secret -a app_title [-u portal_url] [-t app_auth_type]')
-            .demand(['l', 'p', 'a'])
+            .demand(['u', 'p', 'a'])
             .argv;
 
     var args = {
@@ -56,10 +56,10 @@ var register = function(args){
     };
 
     var submit = 'generate=1&' +
-        'oauth_application_title=' + encodeURI(args.app_title) + '&' +
-        'oauth_application_type=' + encodeURI(args.app_auth_type) + '&' +
-        'auth_username=' + encodeURI(args.username) + '&' +
-        'auth_secret=' + encodeURI(args.secret);
+        'oauth_application_title=' + encodeURIComponent(args.app_title) + '&' +
+        'oauth_application_type=' + encodeURIComponent(args.app_auth_type) + '&' +
+        'auth_username=' + encodeURIComponent(args.username) + '&' +
+        'auth_secret=' + encodeURIComponent(args.secret);
     var data = "";
 
     console.log("Sending HTTP request:", options);
@@ -73,7 +73,7 @@ var register = function(args){
             data += chunk;
         }).on('end', function(){
             data = JSON.parse(data);
-            console.log("Successful:", data);
+            console.log("Created entry:", data);
         })
     });
 
