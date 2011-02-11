@@ -19,7 +19,7 @@ var main = function(){
             .default('u', 'http://portal.aflexi.net/mini_operator.php')
             .default('t', 'standard')
             .usage('Usage: oauth-register.js -l username -p secret -a app_title [-u portal_url] [-t app_auth_type]')
-            .demand(['u', 'p', 'a'])
+            .demand(['l', 'p', 'a'])
             .argv;
 
     var args = {
