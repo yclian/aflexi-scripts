@@ -1,22 +1,25 @@
 #!/usr/bin/env node
 
+/**
+ * oauth-register.js - Register an OAuth consumer.
+ *
+ * @author yclian
+ * @since 2.12.20110210
+ * @version 2.12.20110211
+ */
+
 var sys = require('sys');
 var http = require('http');
 var url = require('url');
 var _ = require('underscore');
-
-var help = function(){
-    if(0 in arguments){
-        sys.puts(arguments[0]);
-    }
-    sys.puts('Usage: oauth-register.js -l username -p secret -a app_title [-u portal_url] [-t app_auth_type]');
-};
 
 var main = function(){
 
     var argv = require('optimist')
             .default('u', 'http://portal.aflexi.net/mini_operator.php')
             .default('t', 'standard')
+            .usage('Usage: oauth-register.js -l username -p secret -a app_title [-u portal_url] [-t app_auth_type]')
+            .demand(['u', 'p', 'a'])
             .argv;
 
     var args = {
@@ -25,19 +28,6 @@ var main = function(){
         secret: argv.p,
         app_title: argv.a,
         app_auth_type: argv.t
-    }
-
-    if(args.username === undefined){
-        help("'username' is not defined");
-        process.exit();
-    }
-    if(args.secret === undefined){
-        help("'secret' is not defined");
-        process.exit();
-    }
-    if(args.app_title === undefined){
-        help("'app_title' is not defined");
-        process.exit();
     }
 
     register(args);
@@ -72,8 +62,7 @@ var register = function(args){
         'auth_secret=' + encodeURI(args.secret);
     var data = "";
 
-    console.log("Sending HTTP request: ");
-    console.log(options);
+    console.log("Sending HTTP request:", options);
 
     var request = http.request(options, function(res){
         console.log("Got response: " + res.statusCode);
@@ -84,8 +73,7 @@ var register = function(args){
             data += chunk;
         }).on('end', function(){
             data = JSON.parse(data);
-            console.log("Created entry: ");
-            console.log(data);
+            console.log("Successful:", data);
         })
     });
 
